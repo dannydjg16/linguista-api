@@ -20,12 +20,11 @@ namespace linguista_api.Repositories
 		public async Task<CompletionsResponse> SendCompletionRequest()
 		{
             var url = "https://api.openai.com/v1/chat/completions";
-            var apiKey = "sk-proj-seFyVlFL0J2tF3nRNyCUT3BlbkFJVulTxl84lo6NoLferWSx";
+            
 
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
-            //client.DefaultRequestHeaders.Add("Cookie", "__cf_bm=oN33XBCKzR6XoG5CKcI5CAL8HyMaUcHJA217_ZXVjy4-1717798487-1.0.1.1-8jW58KJeNDoe9a7Vm_VmlUZ_7MTQfN.tTzJyjJAkwt9DZ6_xCB3sgAYk5jQ8w0TZKRE.SS3rZLp5xJNQp4NTGQ; _cfuvid=7q.rZMXxY9iaj4PklJy4_WRbOMAjCpUD.VrFt1SN8rk-1717798487057-0.0.1.1-604800000");
+            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", a);
 
             var requestBody = new
             {
