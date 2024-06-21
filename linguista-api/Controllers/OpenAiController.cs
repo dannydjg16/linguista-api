@@ -1,4 +1,5 @@
-﻿using linguista_api.Services.Interfaces;
+﻿using linguista_api.Models.Completions;
+using linguista_api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -17,9 +18,9 @@ namespace linguista_api.Controllers
         }
 
         [HttpGet("completions")]
-        public async Task<IActionResult> CompletionsGpt35Turbo()
+        public async Task<IActionResult> CompletionsGpt35Turbo(CompletionsRequest request)
         {
-            var response = await _completionsService.PrepareRequest();
+            var response = await _completionsService.PrepareRequest(request);
             return Ok(response);
         }
     }

@@ -14,9 +14,9 @@ namespace linguista_api.Services
 			_completionsRepository = completionsRepository;
 		}
 
-		public async Task<CompletionsResponse> PrepareRequest()
+		public async Task<CompletionsResponse> PrepareRequest(CompletionsRequest request)
 		{
-			var response = await _completionsRepository.SendCompletionRequest();
+			var response = await _completionsRepository.SendCompletionRequest(request);
 
 			return response;
 		}

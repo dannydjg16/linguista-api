@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http.Headers;
 using System.Text;
+using linguista_api.Globals;
 using linguista_api.Models.Completions;
 using linguista_api.Repositories.Interfaces;
 using Newtonsoft.Json;
@@ -11,35 +12,26 @@ namespace linguista_api.Repositories
 	{
         private static readonly HttpClient client = new HttpClient();
 		private readonly IHttpClientFactory _factory;
+        private readonly string _openAiKey;
 
-        public CompletionsRepository(IHttpClientFactory factory)
+        public CompletionsRepository(IHttpClientFactory factory, IConfiguration configuration)
 		{
 			_factory = factory;
+            _openAiKey = configuration.GetValue<string>(Constants.OpenAiKey);
+
 		}
 
-		public async Task<CompletionsResponse> SendCompletionRequest()
+		public async Task<CompletionsResponse> SendCompletionRequest(CompletionsRequest request)
 		{
             var url = "https://api.openai.com/v1/chat/completions";
             
 
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", a);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _openAiKey);
 
-            var requestBody = new
-            {
-                model = "gpt-3.5-turbo",
-                messages = new[]
-                {
-                    new { role = "system", content = "You will be provided with statements, and your task is to convert them to standard English." },
-                    new { role = "user", content = "She no went to the market." }
-                },
-                temperature = 0.2,
-                max_tokens = 40,
-                top_p = 1
-            };
 
-            var json = JsonConvert.SerializeObject(requestBody);
+            var json = JsonConvert.SerializeObject(request);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var response = await client.PostAsync(url, content);

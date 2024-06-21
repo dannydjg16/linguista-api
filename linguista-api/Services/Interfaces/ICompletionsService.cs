@@ -5,6 +5,6 @@ namespace linguista_api.Services.Interfaces
 {
 	public interface ICompletionsService
 	{
-        public Task<CompletionsResponse> PrepareRequest();
+        public Task<CompletionsResponse> PrepareRequest(CompletionsRequest request);
     }
 }
