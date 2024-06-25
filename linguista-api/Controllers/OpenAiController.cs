@@ -21,6 +21,12 @@ namespace linguista_api.Controllers
         public async Task<IActionResult> CompletionsGpt35Turbo(CompletionsRequest request)
         {
             var response = await _completionsService.PrepareRequest(request);
+
+            if(response == null)
+            {
+                return BadRequest("Valid response not provided");
+            }
+
             return Ok(response);
         }
     }
