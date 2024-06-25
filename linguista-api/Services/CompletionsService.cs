@@ -27,5 +27,10 @@ namespace linguista_api.Services
 
 			return null;
 		}
+
+		public async Task DoThingsWithRequestAndResponse()
+		{
+			// Do things like save to database, track user token amount, etc etc
+		}
 	}
 }

@@ -17,6 +17,11 @@ namespace linguista_api.Controllers
             _completionsService = completionsService;
         }
 
+        /// <summary>
+        /// Make a call to the Completions Endpoint, gpt 3.5-turbo
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpGet("completions")]
         public async Task<IActionResult> CompletionsGpt35Turbo(CompletionsRequest request)
         {
