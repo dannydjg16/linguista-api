@@ -14,11 +14,18 @@ namespace linguista_api.Services
 			_completionsRepository = completionsRepository;
 		}
 
-		public async Task<CompletionsResponse> PrepareRequest(CompletionsRequest request)
+		public async Task<string> PrepareRequest(CompletionsRequest request)
 		{
 			var response = await _completionsRepository.SendCompletionRequest(request);
 
-			return response;
+			if (response.Choices != null && response.Choices[0].Message != null)
+			{
+				var completionString = response.Choices[0].Message.Content;
+
+				return completionString;
+            }
+
+			return null;
 		}
 	}
 }
