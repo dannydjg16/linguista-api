@@ -20,7 +20,9 @@ namespace linguista_api.Services
 
 			if (response.Choices != null && response.Choices[0].Message != null)
 			{
-				var completionString = response.Choices[0].Message.Content;
+				var completionString = response?.Choices[0]?.Message?.Content;
+
+				//DoThingsWithRequestAndResponse(request, response);
 
 				return completionString;
             }
@@ -28,7 +30,7 @@ namespace linguista_api.Services
 			return null;
 		}
 
-		public async Task DoThingsWithRequestAndResponse()
+		public async Task DoThingsWithRequestAndResponse(CompletionsRequest request, CompletionsResponse response)
 		{
 			// Do things like save to database, track user token amount, etc etc
 		}
