@@ -7,7 +7,7 @@ namespace linguista_api.Globals
 	public static class HttpClientBuilders
 	{
 		public static void CreateHttpClient(this IServiceCollection services, string clientName, int retries = 2, int singleAttemptTimeout = 60,
-			int clientTimeout = 120, string baseAddress = "", bool addServiceHeader = false)
+			int clientTimeout = 120, string baseAddress = "")
 		{
 			List<TimeSpan> retryTimespans = new List<TimeSpan>();
 

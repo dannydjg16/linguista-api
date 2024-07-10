@@ -14,11 +14,25 @@ namespace linguista_api.Services
 			_completionsRepository = completionsRepository;
 		}
 
-		public async Task<CompletionsResponse> PrepareRequest(CompletionsRequest request)
+		public async Task<string> PrepareRequest(CompletionsRequest request)
 		{
 			var response = await _completionsRepository.SendCompletionRequest(request);
 
-			return response;
+			if (response.Choices != null && response.Choices[0].Message != null)
+			{
+				var completionString = response?.Choices[0]?.Message?.Content;
+
+				//DoThingsWithRequestAndResponse(request, response);
+
+				return completionString;
+            }
+
+			return null;
+		}
+
+		public async Task DoThingsWithRequestAndResponse(CompletionsRequest request, CompletionsResponse response)
+		{
+			// Do things like save to database, track user token amount, etc etc
 		}
 	}
 }
