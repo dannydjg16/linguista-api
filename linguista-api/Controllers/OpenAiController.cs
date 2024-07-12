@@ -43,7 +43,6 @@ namespace linguista_api.Controllers
         [HttpPost("test")]
         public async Task<IActionResult> Test()
         {
-
             return Ok("connection");
         }
     }
