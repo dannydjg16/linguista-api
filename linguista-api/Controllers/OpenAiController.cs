@@ -34,5 +34,17 @@ namespace linguista_api.Controllers
 
             return Ok(response);
         }
+
+        /// <summary>
+        /// Make a call to the Completions Endpoint, gpt 3.5-turbo
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("test")]
+        public async Task<IActionResult> Test()
+        {
+
+            return Ok("connection");
+        }
     }
 }
