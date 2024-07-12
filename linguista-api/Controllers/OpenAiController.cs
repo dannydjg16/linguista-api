@@ -22,7 +22,7 @@ namespace linguista_api.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [HttpGet("completions")]
+        [HttpPost("completions")]
         public async Task<IActionResult> CompletionsGpt35Turbo(CompletionsRequest request)
         {
             var response = await _completionsService.PrepareRequest(request);
