@@ -25,7 +25,6 @@ namespace linguista_api.Repositories
 		{
             var url = "https://api.openai.com/v1/chat/completions";
             
-
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _openAiKey);
