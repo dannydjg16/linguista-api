@@ -25,7 +25,7 @@ namespace linguista_api.Controllers
         [HttpPost("completions")]
         public async Task<IActionResult> CompletionsGpt35Turbo(CompletionsRequest request)
         {
-            var response = await _completionsService.PrepareRequest(request);
+            var response = await _completionsService.PrepareRequestReturnObject(request);
 
             if(response == null)
             {
