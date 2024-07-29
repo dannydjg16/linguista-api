@@ -25,7 +25,7 @@ namespace linguista_api.Controllers
         [HttpPost("completions")]
         public async Task<IActionResult> CompletionsGpt35Turbo(CompletionsRequest request)
         {
-            var response = await _completionsService.PrepareRequest(request);
+            var response = await _completionsService.PrepareRequestReturnObject(request);
 
             if(response == null)
             {
@@ -33,6 +33,17 @@ namespace linguista_api.Controllers
             }
 
             return Ok(response);
+        }
+
+        /// <summary>
+        /// Make a call to the Completions Endpoint, gpt 3.5-turbo
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("test")]
+        public async Task<IActionResult> Test()
+        { 
+            return Ok("connection");
         }
     }
 }
