@@ -3,8 +3,11 @@ name: Deploy linguista
 on:
   push:
     branches:
-      - master
+      - 'master'
   pull_request:
+    types: [closed]
+    branches:
+      - master
 
 jobs:
   build-and-deploy:
