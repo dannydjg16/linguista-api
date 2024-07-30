@@ -16,6 +16,8 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddHealthChecks();
+
 // Add Services for DI
 builder.Services.AddScoped<ICompletionsRepository, CompletionsRepository>();
 builder.Services.AddScoped<ICompletionsService, CompletionsService>();
