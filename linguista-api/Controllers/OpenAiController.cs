@@ -36,7 +36,7 @@ namespace linguista_api.Controllers
         }
 
         /// <summary>
-        /// Make a call to the Completions Endpoint, gpt 3.5-turbo
+        /// Make a call to the test endpoint
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
