@@ -2,10 +2,6 @@
 using linguista_api.Repositories.Interfaces;
 using linguista_api.Services;
 using linguista_api.Services.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
-using Okta.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -25,30 +21,6 @@ builder.Services.AddHealthChecks();
 builder.Services.AddScoped<ICompletionsRepository, CompletionsRepository>();
 builder.Services.AddScoped<ICompletionsService, CompletionsService>();
 builder.Services.AddHttpClient();
-
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
-//    options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
-//    options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
-//}).AddOktaWebApi(new OktaWebApiOptions()
-//{
-//    OktaDomain = "https://dev-7824301.okta.com",
-//    AuthorizationServerId = "default",
-//    Audience = "api://default"
-
-//});
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
-//    options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
-//})
-//.AddOktaWebApi(new OktaWebApiOptions
-//{
-//    OktaDomain = builder.Configuration["Okta:Issuer"],
-//    ClientId = builder.Configuration["Okta:ClientId"],
-//    ClientSecret = builder.Configuration["Okta:ClientSecret"]
-//});
 
 builder.Services.AddAuthentication(options =>
 {
@@ -70,7 +42,6 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
-
 
 var app = builder.Build();
 
