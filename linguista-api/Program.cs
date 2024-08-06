@@ -5,6 +5,7 @@ using linguista_api.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
+using Okta.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,21 @@ builder.Services.AddScoped<ICompletionsRepository, CompletionsRepository>();
 builder.Services.AddScoped<ICompletionsService, CompletionsService>();
 builder.Services.AddHttpClient();
 
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
+//    options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
+//    options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
+//}).AddOktaWebApi(new OktaWebApiOptions()
+//{
+//    OktaDomain = "https://dev-7824301.okta.com",
+//    AuthorizationServerId = "default",
+//    Audience = "api://default"
+
+//});
+
+//builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,7 +50,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+//app.UseAuthentication();
+//app.UseAuthorization();
 
 app.MapControllers();
 
