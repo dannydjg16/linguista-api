@@ -40,11 +40,10 @@ namespace linguista_api.Controllers
         /// <summary>
         /// Make a call to the test endpoint
         /// </summary>
-        /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("test")]
         [Authorize]
-        public async Task<IActionResult> Test()
+        public IActionResult Test()
         { 
             return Ok("connection");
         }
