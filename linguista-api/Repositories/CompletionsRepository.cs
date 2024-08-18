@@ -11,12 +11,10 @@ namespace linguista_api.Repositories
 	public class CompletionsRepository: ICompletionsRepository
 	{
         private static readonly HttpClient client = new HttpClient();
-		private readonly IHttpClientFactory _factory;
         private readonly string _openAiKey;
 
-        public CompletionsRepository(IHttpClientFactory factory, IConfiguration configuration)
+        public CompletionsRepository(IConfiguration configuration)
 		{
-			_factory = factory;
             _openAiKey = configuration.GetValue<string>(Constants.OpenAiKey);
 
 		}
