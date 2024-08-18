@@ -16,7 +16,6 @@ namespace linguista_api.Repositories
         public CompletionsRepository(IConfiguration configuration)
 		{
             _openAiKey = configuration.GetValue<string>(Constants.OpenAiKey);
-
 		}
 
 		public async Task<CompletionsResponse> SendCompletionRequest(CompletionsRequest request)
