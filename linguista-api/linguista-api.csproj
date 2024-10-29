@@ -29,6 +29,7 @@
     <None Remove="Models\" />
     <None Remove="Models\Completions\" />
     <None Remove="Globals\" />
+    <None Remove="Middleware\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
@@ -38,5 +39,6 @@
     <Folder Include="Models\" />
     <Folder Include="Models\Completions\" />
     <Folder Include="Globals\" />
+    <Folder Include="Middleware\" />
   </ItemGroup>
 </Project>
