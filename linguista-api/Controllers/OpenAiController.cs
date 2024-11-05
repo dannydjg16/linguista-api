@@ -38,6 +38,25 @@ namespace linguista_api.Controllers
         }
 
         /// <summary>
+        /// Make a call to the Completions Endpoint, gpt 3.5-turbo
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("audio")]
+        [Authorize]
+        public async Task<IActionResult> GenerateAudio(CompletionsRequest request)
+        {
+            var response = await _completionsService.PrepareRequestReturnObject(request);
+
+            if (response == null)
+            {
+                return BadRequest("Valid response not provided");
+            }
+
+            return Ok(response);
+        }
+
+        /// <summary>
         /// Make a call to the test endpoint
         /// </summary>
         /// <returns></returns>
