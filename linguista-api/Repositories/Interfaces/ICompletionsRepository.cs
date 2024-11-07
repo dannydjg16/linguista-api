@@ -8,4 +8,3 @@ namespace linguista_api.Repositories.Interfaces
         public Task<CompletionsResponse> SendCompletionRequest(CompletionsRequest request);
     }
 }
-
