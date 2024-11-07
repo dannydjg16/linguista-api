@@ -1,5 +1,4 @@
-﻿using System;
-using linguista_api.Models.Completions;
+﻿using linguista_api.Models.Completions;
 using linguista_api.Repositories.Interfaces;
 using linguista_api.Services.Interfaces;
 
