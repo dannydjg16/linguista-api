@@ -1,5 +1,4 @@
-﻿using System;
-using linguista_api.Models.Completions;
+﻿using linguista_api.Models.Completions;
 
 namespace linguista_api.Repositories.Interfaces
 {
@@ -8,4 +7,3 @@ namespace linguista_api.Repositories.Interfaces
         public Task<CompletionsResponse> SendCompletionRequest(CompletionsRequest request);
     }
 }
-
