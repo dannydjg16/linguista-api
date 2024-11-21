@@ -4,6 +4,7 @@ namespace linguista_api.Services.Interfaces
 {
 	public interface ICompletionsService
 	{
-        public Task<CompletionsResponse> PrepareRequestReturnObject(CompletionsRequest request);
+        Task<CompletionsResponse?> PrepareRequestReturnObject(CompletionsRequest request);
+        Task<Stream?> FetchTextToSpeech(TtsRequest request);
     }
 }
