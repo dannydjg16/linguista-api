@@ -42,11 +42,11 @@ namespace linguista_api.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [HttpPost("audio")]
+        [HttpPost("tts")]
         [Authorize]
-        public async Task<IActionResult> GenerateAudio(CompletionsRequest request)
+        public async Task<IActionResult> FetchTextToSpeech(TtsRequest request)
         {
-            var response = await _completionsService.PrepareRequestReturnObject(request);
+            var response = await _completionsService.FetchTextToSpeech(request);
 
             if (response == null)
             {
