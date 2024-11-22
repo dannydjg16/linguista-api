@@ -53,7 +53,7 @@ namespace linguista_api.Controllers
                 return BadRequest("Valid response not provided");
             }
 
-            return Ok(response);
+            return File(response, "audio/mpeg");
         }
 
         /// <summary>
