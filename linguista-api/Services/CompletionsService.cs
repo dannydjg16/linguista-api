@@ -25,9 +25,9 @@ namespace linguista_api.Services
             return null;
         }
 
-        public async Task<Stream?> FetchTextToSpeech(TtsRequest request)
+        public async Task<Stream?> GenerateTextToSpeech(TtsRequest request)
         {
-            var response = await _completionsRepository.FetchTextToSpeech(request);
+            var response = await _completionsRepository.GenerateTextToSpeech(request);
 
             return response;
         }

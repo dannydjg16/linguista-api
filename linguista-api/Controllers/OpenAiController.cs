@@ -44,9 +44,9 @@ namespace linguista_api.Controllers
         /// <returns></returns>
         [HttpPost("tts")]
         [Authorize]
-        public async Task<IActionResult> FetchTextToSpeech(TtsRequest request)
+        public async Task<IActionResult> GenerateTextToSpeech(TtsRequest request)
         {
-            var response = await _completionsService.FetchTextToSpeech(request);
+            var response = await _completionsService.GenerateTextToSpeech(request);
 
             if (response == null)
             {

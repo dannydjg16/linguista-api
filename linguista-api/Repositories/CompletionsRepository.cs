@@ -38,7 +38,7 @@ namespace linguista_api.Repositories
             return responseObject;
         }
 
-        public async Task<Stream?> FetchTextToSpeech(TtsRequest request)
+        public async Task<Stream?> GenerateTextToSpeech(TtsRequest request)
         {
             var url = Constants.OpenAiBaseUrl + Constants.AudioSpeechEndpoint;
 
