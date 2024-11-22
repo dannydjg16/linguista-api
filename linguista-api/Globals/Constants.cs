@@ -1,5 +1,4 @@
-﻿using System;
-namespace linguista_api.Globals
+﻿namespace linguista_api.Globals
 {
 	public class Constants
 	{

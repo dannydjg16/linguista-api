@@ -29,11 +29,6 @@ namespace linguista_api.Services
         {
             var response = await _completionsRepository.FetchTextToSpeech(request);
 
-            //if (response.Choices != null && response.Choices[0].Message != null)
-            //{
-            //    return response;
-            //}
-
             return response;
         }
     }
