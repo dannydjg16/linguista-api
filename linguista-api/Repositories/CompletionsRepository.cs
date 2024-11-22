@@ -58,11 +58,11 @@ namespace linguista_api.Repositories
                 throw new HttpRequestException(error);
             }
 
-            var responseString = await response.Content.ReadAsStreamAsync();
+            var responseStream = await response.Content.ReadAsStreamAsync();
 
-            Console.WriteLine(responseString);
+            Console.WriteLine(responseStream);
 
-            return responseString;
+            return responseStream;
         }
     }
 }
