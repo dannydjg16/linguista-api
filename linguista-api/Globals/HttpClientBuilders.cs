@@ -1,5 +1,4 @@
-﻿using System;
-using Polly;
+﻿using Polly;
 using Polly.Extensions.Http;
 
 namespace linguista_api.Globals
