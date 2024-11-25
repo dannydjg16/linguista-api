@@ -1,5 +1,4 @@
-﻿using System;
-namespace linguista_api.Models
+﻿namespace linguista_api.Models
 {
 	public class User
 	{
