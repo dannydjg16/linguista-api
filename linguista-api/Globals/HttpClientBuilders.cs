@@ -29,4 +29,3 @@ namespace linguista_api.Globals
 		}
 	}
 }
-
