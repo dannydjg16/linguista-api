@@ -10,5 +10,7 @@ namespace linguista_api.Models.Completions
         public string? Input { get; set; }
         [JsonProperty("voice")]
         public string? Voice { get; set; }
+        [JsonProperty("speed")]
+        public string? Speed { get; set; }
     }
 }
