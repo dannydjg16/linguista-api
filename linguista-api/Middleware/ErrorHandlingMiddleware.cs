@@ -1,5 +1,4 @@
-﻿using System;
-namespace linguista_api.Middleware
+﻿namespace linguista_api.Middleware
 {
 	public class ErrorHandlingMiddleware
 	{
@@ -8,4 +7,3 @@ namespace linguista_api.Middleware
 		}
 	}
 }
-

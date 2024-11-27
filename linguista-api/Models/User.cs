@@ -1,5 +1,4 @@
-﻿using System;
-namespace linguista_api.Models
+﻿namespace linguista_api.Models
 {
 	public class User
 	{
@@ -9,4 +8,3 @@ namespace linguista_api.Models
 		public int TotalTokens { get; set; }
 	}
 }
-
