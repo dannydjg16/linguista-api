@@ -38,7 +38,7 @@ namespace linguista_api.Controllers
         }
 
         /// <summary>
-        /// Make a call to the Text To Speech Endpoint, gpt 3.5-turbo
+        /// Make a call to the Text To Speech Endpoint
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
