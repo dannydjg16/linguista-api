@@ -55,6 +55,25 @@ namespace linguista_api.Controllers
         }
 
         /// <summary>
+        /// Make a call to Completions, then use whats returned to make and return TTS
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("completions/tts")]
+        [Authorize]
+        public async Task<IActionResult> GetCompletionAndTts(TtsRequest request)
+        {
+            var response = await _completionsService.GenerateTextToSpeech(request);
+
+            if (response == null)
+            {
+                return BadRequest("Valid response not provided");
+            }
+
+            return File(response, "audio/mpeg");
+        }
+
+        /// <summary>
         /// Make a call to the test endpoint
         /// </summary>
         /// <returns></returns>
