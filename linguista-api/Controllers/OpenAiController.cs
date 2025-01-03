@@ -2,6 +2,7 @@
 using linguista_api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using linguista_api.Models.TTS;
 
 namespace linguista_api.Controllers
 {
@@ -61,15 +62,16 @@ namespace linguista_api.Controllers
         /// <returns></returns>
         [HttpPost("completions/tts")]
         [Authorize]
-        public async Task<IActionResult> GetCompletionAndTts(TtsRequest request)
+        public async Task<IActionResult> GetCompletionAndTts(CompletionsRequestWithTts request)
         {
-            var response = await _completionsService.GenerateTextToSpeech(request);
+            var response = await _completionsService.GetCompletionAndTts(request);
 
             if (response == null)
             {
                 return BadRequest("Valid response not provided");
             }
 
+            return Ok(response);
             return File(response, "audio/mpeg");
         }
 
