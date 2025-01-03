@@ -72,7 +72,7 @@ namespace linguista_api.Controllers
             }
 
             return Ok(response);
-            return File(response, "audio/mpeg");
+            //return File(response, "audio/mpeg");
         }
 
         /// <summary>

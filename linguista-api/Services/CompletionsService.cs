@@ -5,14 +5,14 @@ using linguista_api.Services.Interfaces;
 
 namespace linguista_api.Services
 {
-	public class CompletionsService: ICompletionsService
-	{
-		public ICompletionsRepository _completionsRepository;
+    public class CompletionsService : ICompletionsService
+    {
+        public ICompletionsRepository _completionsRepository;
 
-		public CompletionsService(ICompletionsRepository completionsRepository)
-		{
-			_completionsRepository = completionsRepository;
-		}
+        public CompletionsService(ICompletionsRepository completionsRepository)
+        {
+            _completionsRepository = completionsRepository;
+        }
 
         public async Task<CompletionsResponse?> PrepareRequestReturnObject(CompletionsRequest request)
         {
@@ -38,17 +38,19 @@ namespace linguista_api.Services
 
             var completionsResponse = await _completionsRepository.SendCompletionRequest(request);
 
+            //request.Messages.Last
+
             Stream tts;
 
-            if (request.TtsRequest != null)
-            {
-                tts = await _completionsRepository.GenerateTextToSpeech(request.TtsRequest);
-            }
-            
 
-            var completionsResponseWithTtsData = 
+            tts = await _completionsRepository.GenerateTextToSpeech(request.TtsRequest);
 
-            return response;
+
+
+            CompletionsResponseWithTtsData completionsResponseWithTtsData = (CompletionsResponseWithTtsData)completionsResponse;
+            completionsResponseWithTtsData.TtsStream = tts;
+
+            return completionsResponseWithTtsData;
         }
     }
 }

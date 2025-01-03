@@ -64,5 +64,32 @@ namespace linguista_api.Repositories
 
             return responseStream;
         }
+
+        //private async Task<(Stream, string)> GenerateSpeechAsync(TtsRequest request)
+        //{
+        //    var url = Constants.OpenAiBaseUrl + Constants.AudioSpeechEndpoint;
+
+        //    client.DefaultRequestHeaders.Accept.Clear();
+        //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _openAiKey);
+
+        //    var json = JsonConvert.SerializeObject(request);
+        //    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        //    var response = await client.PostAsync(url, content);
+
+        //    // If response isnt success, error out. This may be better to update with try/catch for retries
+        //    if (!response.IsSuccessStatusCode)
+        //    {
+        //        var error = await response.Content.ReadAsStringAsync();
+        //        throw new HttpRequestException(error);
+        //    }
+
+        //    var responseStream = await response.Content.ReadAsStreamAsync();
+
+        //    Console.WriteLine(responseStream);
+
+        //    return responseStream;
+        //}
     }
 }
