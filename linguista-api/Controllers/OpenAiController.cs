@@ -23,7 +23,7 @@ namespace linguista_api.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("completions")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> CompletionsGpt35Turbo(CompletionsRequest request)
         {
             var response = await _completionsService.PrepareRequestReturnObject(request);
@@ -61,7 +61,7 @@ namespace linguista_api.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("completions/tts")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> GetCompletionAndTts(CompletionsRequestWithTts request)
         {
             var response = await _completionsService.GetCompletionAndTts(request);
