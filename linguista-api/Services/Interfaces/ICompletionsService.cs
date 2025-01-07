@@ -1,5 +1,4 @@
 ﻿using linguista_api.Models.Completions;
-using linguista_api.Models.TTS;
 
 namespace linguista_api.Services.Interfaces
 {
@@ -7,6 +6,5 @@ namespace linguista_api.Services.Interfaces
 	{
         Task<CompletionsResponse?> PrepareRequestReturnObject(CompletionsRequest request);
         Task<Stream?> GenerateTextToSpeech(TtsRequest request);
-        Task<CompletionsResponseWithTtsData?> GetCompletionAndTts(CompletionsRequestWithTts request);
     }
 }

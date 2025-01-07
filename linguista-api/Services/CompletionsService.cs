@@ -1,5 +1,4 @@
 ﻿using linguista_api.Models.Completions;
-using linguista_api.Models.TTS;
 using linguista_api.Repositories.Interfaces;
 using linguista_api.Services.Interfaces;
 
@@ -31,31 +30,6 @@ namespace linguista_api.Services
             var response = await _completionsRepository.GenerateTextToSpeech(request);
 
             return response;
-        }
-
-        public async Task<CompletionsResponseWithTtsData?> GetCompletionAndTts(CompletionsRequestWithTts request)
-        {
-
-            var completionsResponse = await _completionsRepository.SendCompletionRequest(request.CompletionsRequest);
-
-            //request.Messages.Last
-
-            //Stream tts;
-
-
-            var tts = await _completionsRepository.GenerateTextToSpeech(request.TtsRequest);
-
-
-
-            CompletionsResponseWithTtsData completionsResponseWithTtsData = new CompletionsResponseWithTtsData
-            {
-                CompletionsResponse = completionsResponse,
-                TtsStream = tts
-            };
-            //completionsResponseWithTtsData.CompletionsResponse = completionsResponse;
-            //completionsResponseWithTtsData.TtsStream = tts;
-
-            return completionsResponseWithTtsData;
         }
     }
 }
