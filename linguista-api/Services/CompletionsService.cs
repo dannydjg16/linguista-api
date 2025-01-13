@@ -39,7 +39,7 @@ namespace linguista_api.Services
                     {
                         new Message
                         {
-                            Role = "System",
+                            Role = "system",
                             Content = "Transliterate the following Message from farsi to English. Then, give a word by word translation of the transliterated sentence"
                         },
                         new Message
@@ -54,7 +54,7 @@ namespace linguista_api.Services
 
                 };
 
-                //var transliterationResponse = 
+                var transliterationResponse = await _completionsRepository.SendCompletionRequest(transliterationRequest);
 
 
                 return response;
