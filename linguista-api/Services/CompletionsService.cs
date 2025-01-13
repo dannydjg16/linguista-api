@@ -58,6 +58,7 @@ namespace linguista_api.Services
 
                 var transliterationResponse = await _completionsRepository.SendCompletionRequest(transliterationRequest);
 
+                response.Choices[0].Message.AdditionalContent = transliterationResponse.Choices[0].Message.Content;
 
                 return response;
             }
