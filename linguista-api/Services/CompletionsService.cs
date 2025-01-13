@@ -25,14 +25,14 @@ namespace linguista_api.Services
             return null;
         }
 
-        public async Task<string?> TransliterateString(CompletionsResponse response)
-        {
-            // make the Completions Request
+        //public async Task<string?> TransliterateString(CompletionsResponse response)
+        //{
+        //    // make the Completions Request
 
-            //var response = await
+        //    //var response = await
 
-            // add string received back to the response somehow. 
-        }
+        //    // add string received back to the response somehow. 
+        //}
 
         public async Task<Stream?> GenerateTextToSpeech(TtsRequest request)
         {
