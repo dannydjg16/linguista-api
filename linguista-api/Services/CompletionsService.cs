@@ -18,7 +18,45 @@ namespace linguista_api.Services
             var response = await _completionsRepository.SendCompletionRequest(request);
 
             if (response?.Choices != null && response.Choices[0].Message != null)
+            { 
+                return response;
+            }
+
+            return null;
+        }
+
+        public async Task<CompletionsResponse?> PrepareRequestAndTransliterate(CompletionsRequest request)
+        {
+            var response = await _completionsRepository.SendCompletionRequest(request);
+
+            if (response?.Choices != null && response.Choices[0].Message != null)
             {
+                var transliterationRequest = new CompletionsRequest
+                {
+                    ChatModel = "gpt-3.5-turbo",
+                    MaxTokens = 100,
+                    Messages = new List<Message>
+                    {
+                        new Message
+                        {
+                            Role = "System",
+                            Content = "Transliterate the following Message from farsi to English. Then, give a word by word translation of the transliterated sentence"
+                        },
+                        new Message
+                        {
+                            Role = "user",
+                            Content = response.Choices.Last().Message.Content
+                        }
+
+                    },
+                    Temperature = 0.2f,
+                    TopP = 1
+
+                };
+
+                //var transliterationResponse = 
+
+
                 return response;
             }
 
