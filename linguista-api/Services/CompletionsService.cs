@@ -40,9 +40,7 @@ namespace linguista_api.Services
                         new Message
                         {
                             Role = "system",
-                            Content = "Transliterate the following Message from farsi to English. " +
-                            "Then, translate that into English" +
-                            "Show how every single transliterated word translates into the corresponding English word or phrase"
+                            Content = "Transliterate the following Message from farsi to English. " 
                         },
                         new Message
                         {
