@@ -44,7 +44,7 @@ namespace linguista_api.Controllers
         [Authorize]
         public async Task<IActionResult> CompletionsGpt35Turbo(CompletionsRequest request)
         {
-            var response = await _completionsService.PrepareRequestAndTransliterate(request);
+            var response = await _completionsService.PrepareRequestReturnObject(request);
 
             if (response == null)
             {
