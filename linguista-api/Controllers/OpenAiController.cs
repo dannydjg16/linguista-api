@@ -35,7 +35,6 @@ namespace linguista_api.Controllers
             return Ok(response);
         }
 
-
         /// <summary>
         /// Make a call to the Completions Endpoint, gpt 3.5-turbo
         /// </summary>
@@ -54,7 +53,6 @@ namespace linguista_api.Controllers
 
             return Ok(response);
         }
-
 
         /// <summary>
         /// Make a call to the Text To Speech Endpoint
