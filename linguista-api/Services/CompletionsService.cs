@@ -49,7 +49,6 @@ namespace linguista_api.Services
                         }
 
                     },
-                    Temperature = 0.2f,
                     TopP = 1
                 };
 
