@@ -15,6 +15,9 @@ namespace linguista_api.Services
 
         public async Task<CompletionsResponse?> PrepareRequestReturnObject(CompletionsRequest request)
         {
+            // Put sorting logic here
+            var sortedRequest = FilterCompletionsRequest(request);
+
             var response = await _completionsRepository.SendCompletionRequest(request);
 
             if (response?.Choices != null && response.Choices[0].Message != null)
@@ -23,6 +26,13 @@ namespace linguista_api.Services
             }
 
             return null;
+        }
+
+        private CompletionsRequest FilterCompletionsRequest(CompletionsRequest request)
+        {
+
+
+            return new CompletionsRequest();
         }
 
         public async Task<CompletionsResponse?> PrepareRequestAndTransliterate(CompletionsRequest request)
