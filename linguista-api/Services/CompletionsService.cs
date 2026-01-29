@@ -16,9 +16,9 @@ namespace linguista_api.Services
         public async Task<CompletionsResponse?> PrepareRequestReturnObject(CompletionsRequest request)
         {
             // Put sorting logic here
-            var sortedRequest = FilterCompletionsRequest(request);
+            //var sortedRequest = FilterCompletionsRequest(request);
 
-            var response = await _completionsRepository.SendCompletionRequest(sortedRequest);
+            var response = await _completionsRepository.SendCompletionRequest(request);
 
             if (response?.Choices != null && response.Choices[0].Message != null)
             { 
@@ -30,14 +30,22 @@ namespace linguista_api.Services
 
         private CompletionsRequest FilterCompletionsRequest(CompletionsRequest request, int maxLength=int.MaxValue)
         {
-            if (request?.Messages?.Count() < maxLength)
+            if (request?.Messages?.Count < maxLength)
             {
                 return request;
             }
 
+            var systemMessages = request?.Messages?.Where(m => m.Role == "system").ToList();
 
+            var numberOfNonSystemElementsToKeep = maxLength - systemMessages.Count;
 
-            return new CompletionsRequest();
+            var nonSystemElementsToKeep = request?.Messages?.TakeLast(numberOfNonSystemElementsToKeep);
+
+            var trimmedList = systemMessages.Concat(nonSystemElementsToKeep).ToList();
+
+            request.Messages = trimmedList;
+
+            return request;
         }
 
         public async Task<CompletionsResponse?> PrepareRequestAndTransliterate(CompletionsRequest request)
