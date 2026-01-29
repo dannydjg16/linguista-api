@@ -28,9 +28,9 @@ namespace linguista_api.Services
             return null;
         }
 
-        private CompletionsRequest FilterCompletionsRequest(CompletionsRequest request)
+        private CompletionsRequest FilterCompletionsRequest(CompletionsRequest request, int maxLength)
         {
-
+            var 
 
             return new CompletionsRequest();
         }
