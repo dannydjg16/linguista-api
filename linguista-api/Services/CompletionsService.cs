@@ -18,7 +18,7 @@ namespace linguista_api.Services
             // Put sorting logic here
             var sortedRequest = FilterCompletionsRequest(request);
 
-            var response = await _completionsRepository.SendCompletionRequest(request);
+            var response = await _completionsRepository.SendCompletionRequest(sortedRequest);
 
             if (response?.Choices != null && response.Choices[0].Message != null)
             { 
@@ -28,9 +28,14 @@ namespace linguista_api.Services
             return null;
         }
 
-        private CompletionsRequest FilterCompletionsRequest(CompletionsRequest request, int maxLength)
+        private CompletionsRequest FilterCompletionsRequest(CompletionsRequest request, int maxLength=int.MaxValue)
         {
-            var 
+            if (request?.Messages?.Count() < maxLength)
+            {
+                return request;
+            }
+
+
 
             return new CompletionsRequest();
         }
