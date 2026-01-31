@@ -72,16 +72,5 @@ namespace linguista_api.Controllers
 
             return File(response, "audio/mpeg");
         }
-
-        /// <summary>
-        /// Make a call to the test endpoint
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("test")]
-        [Authorize]
-        public IActionResult Test()
-        { 
-            return Ok("connection");
-        }
     }
 }
