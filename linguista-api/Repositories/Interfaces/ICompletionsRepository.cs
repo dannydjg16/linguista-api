@@ -1,4 +1,5 @@
 ﻿using linguista_api.Models.Completions;
+using linguista_api.Models.Image;
 
 namespace linguista_api.Repositories.Interfaces
 {
@@ -6,5 +7,6 @@ namespace linguista_api.Repositories.Interfaces
 	{
         Task<CompletionsResponse?> SendCompletionRequest(CompletionsRequest request);
         Task<Stream?> GenerateTextToSpeech(TtsRequest request);
+        Task<byte[]> GenerateImage(ImageGenerationRequest request);
     }
 }
