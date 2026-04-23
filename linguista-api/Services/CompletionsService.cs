@@ -1,4 +1,5 @@
 ﻿using linguista_api.Models.Completions;
+using linguista_api.Models.Image;
 using linguista_api.Repositories.Interfaces;
 using linguista_api.Services.Interfaces;
 
@@ -85,6 +86,13 @@ namespace linguista_api.Services
         public async Task<Stream?> GenerateTextToSpeech(TtsRequest request)
         {
             var response = await _completionsRepository.GenerateTextToSpeech(request);
+
+            return response;
+        }
+
+        public async Task<byte[]> GenerateImage(ImageGenerationRequest request)
+        {
+            var response = await _completionsRepository.GenerateImage(request);
 
             return response;
         }
