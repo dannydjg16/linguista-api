@@ -72,5 +72,24 @@ namespace linguista_api.Controllers
 
             return File(response, "audio/mpeg");
         }
+
+        /// <summary>
+        /// Make a call to the Image Generation Endpoint
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("image")]
+        [Authorize]
+        public async Task<IActionResult> GenerateImage(TtsRequest request)
+        {
+            var response = await _completionsService.GenerateTextToSpeech(request);
+
+            if (response == null)
+            {
+                return BadRequest("Valid response not provided");
+            }
+
+            return File(response, "audio/mpeg");
+        }
     }
 }
