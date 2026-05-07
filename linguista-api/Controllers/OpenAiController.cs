@@ -2,6 +2,7 @@
 using linguista_api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using linguista_api.Models.Image;
 
 namespace linguista_api.Controllers
 {
@@ -71,6 +72,25 @@ namespace linguista_api.Controllers
             }
 
             return File(response, "audio/mpeg");
+        }
+
+        /// <summary>
+        /// Make a call to the Image Generation Endpoint
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("image")]
+        [Authorize]
+        public async Task<IActionResult> GenerateImage(ImageGenerationRequest request)
+        {
+            var response = await _completionsService.GenerateImage(request);
+
+            if (response == null)
+            {
+                return BadRequest("Valid response not provided");
+            }
+
+            return File(response, "image/png");
         }
     }
 }
