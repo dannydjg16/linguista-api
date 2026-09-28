@@ -2,8 +2,8 @@
 using linguista_api.Repositories.Interfaces;
 using linguista_api.Services;
 using linguista_api.Services.Interfaces;
+using Auth0.AspNetCore.Authentication.Api;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,24 +23,9 @@ builder.Services.AddScoped<ICompletionsRepository, CompletionsRepository>();
 builder.Services.AddScoped<ICompletionsService, CompletionsService>();
 builder.Services.AddHttpClient();
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.Authority = builder.Configuration["Okta:Issuer"];
-    options.Audience = "api://default";
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidIssuer = builder.Configuration["Okta:Issuer"],
-        ValidateAudience = true,
-        ValidAudience = "api://default",
-        ValidateLifetime = true
-    };
-});
+// Validate Auth0-issued access tokens (issuer, audience, signature, lifetime)
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddAuth0ApiAuthentication(JwtBearerDefaults.AuthenticationScheme, builder.Configuration.GetSection("Auth0"));
 
 builder.Services.AddAuthorization();
 
