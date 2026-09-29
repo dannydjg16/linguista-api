@@ -1,4 +1,6 @@
-﻿public class LoggingMiddleware
+﻿using Microsoft.Net.Http.Headers;
+
+public class LoggingMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly ILogger<LoggingMiddleware> _logger;
@@ -31,27 +33,45 @@
 
     private async Task LogRequest(HttpContext context)
     {
-        context.Request.EnableBuffering(); // Allows reading request body multiple times
         var request = context.Request;
 
-        var requestBody = await new StreamReader(request.Body).ReadToEndAsync();
-        context.Request.Body.Position = 0; // Reset stream position for further processing
+        // Never log the bearer token
+        var headers = request.Headers
+            .Where(h => !h.Key.Equals(HeaderNames.Authorization, StringComparison.OrdinalIgnoreCase))
+            .ToList();
 
         _logger.LogInformation("HTTP Request Information: ");
         _logger.LogInformation("Method: {Method}", request.Method);
         _logger.LogInformation("Path: {Path}", request.Path);
-        _logger.LogInformation("Headers: {Headers}", request.Headers);
-        _logger.LogInformation("Body: {Body}", requestBody);
+        _logger.LogInformation("Headers: {Headers}", headers);
+
+        if (IsJson(request.ContentType))
+        {
+            request.EnableBuffering(); // Allows reading request body multiple times
+            var requestBody = await new StreamReader(request.Body).ReadToEndAsync();
+            request.Body.Position = 0; // Reset stream position for further processing
+
+            _logger.LogInformation("Body: {Body}", requestBody);
+        }
     }
 
     private async Task LogResponse(HttpContext context)
     {
-        context.Response.Body.Seek(0, SeekOrigin.Begin);
-        var responseBody = await new StreamReader(context.Response.Body).ReadToEndAsync();
-        context.Response.Body.Seek(0, SeekOrigin.Begin);
-
         _logger.LogInformation("HTTP Response Information: ");
         _logger.LogInformation("Status Code: {StatusCode}", context.Response.StatusCode);
-        _logger.LogInformation("Body: {Body}", responseBody);
+
+        // Skip binary bodies like TTS audio and generated images
+        if (IsJson(context.Response.ContentType))
+        {
+            context.Response.Body.Seek(0, SeekOrigin.Begin);
+            var responseBody = await new StreamReader(context.Response.Body).ReadToEndAsync();
+
+            _logger.LogInformation("Body: {Body}", responseBody);
+        }
+
+        context.Response.Body.Seek(0, SeekOrigin.Begin);
     }
+
+    private static bool IsJson(string? contentType) =>
+        contentType != null && contentType.Contains("json", StringComparison.OrdinalIgnoreCase);
 }
