@@ -29,6 +29,8 @@ jobs:
         run: dotnet publish -c Release -o ./publish
 
       - name: Azure Web App Deployment
+        # PRs only build; deploy runs on pushes to main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: azure/webapps-deploy@v2
         with:
           app-name: linguista-appservice  # Replace with your Azure App Service name
