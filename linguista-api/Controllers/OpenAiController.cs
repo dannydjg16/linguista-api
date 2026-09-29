@@ -3,11 +3,14 @@ using linguista_api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using linguista_api.Models.Image;
+using linguista_api.Globals;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace linguista_api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [EnableRateLimiting(Constants.OpenAiRateLimitPolicy)]
     public class OpenAiController : ControllerBase
     {
         private readonly ICompletionsService _completionsService;
@@ -81,6 +84,7 @@ namespace linguista_api.Controllers
         /// <returns></returns>
         [HttpPost("image")]
         [Authorize]
+        [EnableRateLimiting(Constants.ImageRateLimitPolicy)]
         public async Task<IActionResult> GenerateImage(ImageGenerationRequest request)
         {
             var response = await _completionsService.GenerateImage(request);
