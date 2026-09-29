@@ -1,4 +1,32 @@
+<div align="center">
+
+<br/>
+
+```
+██╗     ██╗███╗   ██╗ ██████╗ ██╗   ██╗██╗███████╗████████╗ █████╗
+██║     ██║████╗  ██║██╔════╝ ██║   ██║██║██╔════╝╚══██╔══╝██╔══██╗
+██║     ██║██╔██╗ ██║██║  ███╗██║   ██║██║███████╗   ██║   ███████║
+██║     ██║██║╚██╗██║██║   ██║██║   ██║██║╚════██║   ██║   ██╔══██║
+███████╗██║██║ ╚████║╚██████╔╝╚██████╔╝██║███████║   ██║   ██║  ██║
+╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝  ╚═════╝ ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝
+```
+
+**Master any language. Anytime, anywhere.**
+
+[![Swift](https://img.shields.io/badge/Swift-5.9-FA7343?style=flat-square&logo=swift&logoColor=white)](https://swift.org)
+[![iOS](https://img.shields.io/badge/iOS-17.0+-000000?style=flat-square&logo=apple&logoColor=white)](https://developer.apple.com/ios/)
+[![Xcode](https://img.shields.io/badge/Xcode-15.0+-147EFB?style=flat-square&logo=xcode&logoColor=white)](https://developer.apple.com/xcode/)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen?style=flat-square)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blueviolet?style=flat-square)](CONTRIBUTING.md)
+
+<br/>
+
+
+</div>
+
 # linguista-api
+
+> 📱 iOS / Swift client: [dannydjg16/Linguista](https://github.com/dannydjg16/Linguista)
 
 Backend API for **Linguista**, a language-learning app. It is an ASP.NET Core (.NET 8) Web API that sits between the client and OpenAI, so the OpenAI key never ships to the client. It handles chat completions (with an optional Farsi → English transliteration pass), text-to-speech and image generation.
 
