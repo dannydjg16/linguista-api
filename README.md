@@ -186,6 +186,20 @@ A request over the limit gets `429 Too Many Requests`.
 
 The deploy job needs the `AZURE_WEBAPP_PUBLISH_PROFILE` repository/environment secret.
 
+## Claude Code agents
+
+Three Claude Code subagents live in `.claude/agents/`:
+
+| Agent | Checks | On demand it… |
+|---|---|---|
+| `docs-agent` | XML doc comments on public members, correct existing docs, README in sync | adds or fixes docs |
+| `unit-test-agent` | every service/repository/controller/middleware method has unit tests | creates `linguista-api.Tests` (xUnit + Moq) and writes tests |
+| `solid-agent` | SOLID violations, graded high/medium/low | refactors high and medium findings, keeping the build and tests green |
+
+**On demand:** in Claude Code, ask for one by name, for example `use the unit-test-agent to add tests for CompletionsService` or `@solid-agent audit the repositories`. They write fixes by default. Say "audit" or "check" for a report only.
+
+**On every PR:** `.github/workflows/claude-agents.yml` runs all three agents against the PR diff. Each one posts a sticky PR comment and fails its check if the PR adds undocumented public API, untested logic, or a high-severity SOLID violation. Gaps that existed before the PR are reported but don't block. The workflow also runs `dotnet test` once a test project exists, and you can run a full-repo audit from the Actions tab (**Claude agent checks → Run workflow**). It needs the `ANTHROPIC_API_KEY` repository secret.
+
 ## Status / known gaps
 
 - `AccountController` (`/accountDetails/{accountId}`) is scaffolding. `AccountService` and `AccountDetails` are empty, and `IAccountService` is not registered for dependency injection, so this endpoint fails until it is implemented.
