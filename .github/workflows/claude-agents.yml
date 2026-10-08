@@ -1,0 +1,109 @@
+name: Claude agent checks
+
+# Runs the three Claude Code agents in .claude/agents/ against every PR:
+#   docs-agent       -> XML docs + README in sync
+#   unit-test-agent  -> changed logic has unit tests
+#   solid-agent      -> no new high-severity SOLID violations
+# Each agent posts (and keeps updating) one sticky PR comment and fails its check on a FAIL verdict.
+# It can also be run on demand from the Actions tab for a full-repo audit.
+#
+# Requires the repository secret ANTHROPIC_API_KEY.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+    inputs:
+      agent:
+        description: Which agent to run as a full-repo audit
+        type: choice
+        options: [all, docs-agent, unit-test-agent, solid-agent]
+        default: all
+
+concurrency:
+  group: claude-agents-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  dotnet-test:
+    if: github.event_name == 'workflow_dispatch' || !github.event.pull_request.draft
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Run unit tests
+        run: |
+          if ! ls linguista-api.Tests/*.csproj >/dev/null 2>&1; then
+            echo "::warning::No test project (linguista-api.Tests) yet. Run the unit-test-agent to create one."
+            exit 0
+          fi
+          dotnet test linguista-api.sln --configuration Release
+
+  agent:
+    # Secrets aren't available to fork PRs, so skip them; skip drafts until they're ready for review
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.pull_request.head.repo.full_name == github.repository && !github.event.pull_request.draft)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        agent: ${{ fromJSON(github.event_name == 'workflow_dispatch' && inputs.agent != 'all' && format('["{0}"]', inputs.agent) || '["docs-agent","unit-test-agent","solid-agent"]') }}
+    name: ${{ matrix.agent }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Prepare output directory
+        run: mkdir -p .claude-review/${{ matrix.agent }}
+
+      - name: Run ${{ matrix.agent }}
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: |
+            Read `.claude/agents/${{ matrix.agent }}.md` and follow it exactly. Those instructions are your role for this run.
+
+            ${{ github.event_name == 'pull_request' && format('You are in **PR mode** for PR #{0} in {1}. The base branch is `origin/{2}`. Use `git diff --name-only origin/{2}...HEAD` and `git diff origin/{2}...HEAD` to see what changed.', github.event.pull_request.number, github.repository, github.base_ref) || 'You are in **Audit mode** across the whole repository (manual run). Do not modify source files.' }}
+
+            Write your report to `.claude-review/${{ matrix.agent }}/report.md` and exactly `PASS` or `FAIL` to `.claude-review/${{ matrix.agent }}/verdict`, as described in the "PR mode output" section. Do not edit any other files.
+          claude_args: >-
+            --max-turns 40
+            --allowedTools "Read,Glob,Grep,Write,Bash(git diff:*),Bash(git log:*),Bash(git show:*),Bash(git ls-files:*)"
+
+      - name: Post sticky PR comment
+        if: always() && github.event_name == 'pull_request' && hashFiles(format('.claude-review/{0}/report.md', matrix.agent)) != ''
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: ${{ matrix.agent }}
+          path: .claude-review/${{ matrix.agent }}/report.md
+
+      - name: Check verdict
+        if: always()
+        run: |
+          dir=".claude-review/${{ matrix.agent }}"
+          if [ -f "$dir/report.md" ]; then cat "$dir/report.md" >> "$GITHUB_STEP_SUMMARY"; fi
+          if [ ! -f "$dir/verdict" ]; then
+            echo "::error::${{ matrix.agent }} did not produce a verdict"
+            exit 1
+          fi
+          verdict=$(tr -d '[:space:]' < "$dir/verdict")
+          echo "Verdict: $verdict"
+          if [ "$verdict" != "PASS" ]; then
+            echo "::error::${{ matrix.agent }} reported FAIL. See the PR comment or job summary."
+            exit 1
+          fi
