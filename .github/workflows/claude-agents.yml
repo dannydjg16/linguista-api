@@ -7,7 +7,7 @@ name: Claude agent checks
 # Each agent posts (and keeps updating) one sticky PR comment and fails its check on a FAIL verdict.
 # It can also be run on demand from the Actions tab for a full-repo audit.
 #
-# Requires the repository secret ANTHROPIC_API_KEY.
+# Requires one repository secret: ANTHROPIC_API_KEY (API billing) or CLAUDE_CODE_OAUTH_TOKEN (Claude Pro/Max, from `claude setup-token`).
 
 on:
   pull_request:
@@ -74,6 +74,7 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           prompt: |
             Read `.claude/agents/${{ matrix.agent }}.md` and follow it exactly. Those instructions are your role for this run.
