@@ -198,7 +198,7 @@ Three Claude Code subagents live in `.claude/agents/`:
 
 **On demand:** in Claude Code, ask for one by name, for example `use the unit-test-agent to add tests for CompletionsService` or `@solid-agent audit the repositories`. They write fixes by default. Say "audit" or "check" for a report only.
 
-**On every PR:** `.github/workflows/claude-agents.yml` runs all three agents against the PR diff. Each one posts a sticky PR comment and fails its check if the PR adds undocumented public API, untested logic, or a high-severity SOLID violation. Gaps that existed before the PR are reported but don't block. The workflow also runs `dotnet test` once a test project exists, and you can run a full-repo audit from the Actions tab (**Claude agent checks → Run workflow**). It needs the `ANTHROPIC_API_KEY` repository secret.
+**On every PR:** `.github/workflows/claude-agents.yml` runs all three agents against the PR diff. Each one posts a sticky PR comment and fails its check if the PR adds undocumented public API, untested logic, or a high-severity SOLID violation. Gaps that existed before the PR are reported but don't block. The workflow also runs `dotnet test` once a test project exists, and you can run a full-repo audit from the Actions tab (**Claude agent checks → Run workflow**). It needs one repository secret: `ANTHROPIC_API_KEY` (API billing) or `CLAUDE_CODE_OAUTH_TOKEN` (Claude Pro/Max subscription, generated with `claude setup-token`).
 
 ## Status / known gaps
 
