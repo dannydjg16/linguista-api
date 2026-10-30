@@ -84,7 +84,7 @@ namespace linguista_api.Controllers
         /// <returns></returns>
         [HttpPost("image")]
         [Authorize]
-        [EnableRateLimiting(Constants.ImageRateLimitPolicy)]
+        //[EnableRateLimiting(Constants.ImageRateLimitPolicy)]
         public async Task<IActionResult> GenerateImage(ImageGenerationRequest request)
         {
             var response = await _completionsService.GenerateImage(request);
