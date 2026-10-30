@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using linguista_api.Models.Image;
 using linguista_api.Globals;
-using Microsoft.AspNetCore.RateLimiting;
+//using Microsoft.AspNetCore.RateLimiting;
 
 namespace linguista_api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [EnableRateLimiting(Constants.OpenAiRateLimitPolicy)]
+    //[EnableRateLimiting(Constants.OpenAiRateLimitPolicy)]
     public class OpenAiController : ControllerBase
     {
         private readonly ICompletionsService _completionsService;
